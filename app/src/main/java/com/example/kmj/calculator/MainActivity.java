@@ -7,6 +7,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    TextView c;
     TextView res;
     TextView bt0;
     TextView bt1;
@@ -18,14 +19,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TextView bt7;
     TextView bt8;
     TextView bt9;
-    Text text;
-
+    TextView period;
+    TextView divi;
+    TextView mult;
+    TextView minu;
+    TextView plus;
+    TextView equa;
+    TextView ass;
+    int num1=0,num2=0;
+    String how;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        divi=(TextView) findViewById(R.id.div);
+        mult=(TextView) findViewById(R.id.mul);
+        minu=(TextView) findViewById(R.id.min);
+        plus=(TextView) findViewById(R.id.plu);
+        equa=(TextView) findViewById(R.id.equ);
+        period=(TextView) findViewById(R.id.per);
+        c=(TextView) findViewById(R.id.clear);
         res=(TextView) findViewById(R.id.mainText);
+        ass=(TextView)findViewById(R.id.assisText);
         bt0=(TextView)findViewById(R.id.num0);
         bt1=(TextView)findViewById(R.id.num1);
         bt2=(TextView)findViewById(R.id.num2);
@@ -37,6 +52,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         bt8=(TextView)findViewById(R.id.num8);
         bt9=(TextView)findViewById(R.id.num9);
 
+        divi.setOnClickListener(this);
+        mult.setOnClickListener(this);
+        minu.setOnClickListener(this);
+        plus.setOnClickListener(this);
+        equa.setOnClickListener(this);
+        period.setOnClickListener(this);
+        c.setOnClickListener(this);
+        ass.setOnClickListener(this);
         res.setOnClickListener(this);
         bt0.setOnClickListener(this);
         bt1.setOnClickListener(this);
@@ -84,6 +107,58 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.num9:
                 res.setText(res.getText()+"9");
                 break;
+            case R.id.clear:
+                res.setText("");
+                ass.setText("");
+                how="";
+                num1=0;
+                num2=0;
+                break;
+            case R.id.div:
+                num1=Integer.parseInt(res.getText().toString());
+                how="/";
+                ass.setText(res.getText()+" / ");
+                res.setText("");
+
+                break;
+            case R.id.mul:
+                num1=Integer.parseInt(res.getText().toString());
+                how="*";
+                ass.setText(res.getText()+" * ");
+                res.setText("");
+                break;
+            case R.id.min:
+                num1=Integer.parseInt(res.getText().toString());
+                how="-";
+                ass.setText(res.getText()+" - ");
+                res.setText("");
+                break;
+            case R.id.plu:
+                num1=Integer.parseInt(res.getText().toString());
+                how="+";
+                ass.setText(res.getText()+" + ");
+                res.setText("");
+                break;
+            case R.id.equ:
+                num2=Integer.parseInt(res.getText().toString());
+                res.setText("");
+                switch(how){
+                    case "/":
+                        res.setText(num1/num2);
+                        break;
+                    case "*":
+                        res.setText(num1*num2);
+                        break;
+                    case "-":
+                        res.setText(num1-num2);
+                        break;
+                    case  "+":
+                        res.setText(num1+num2);
+                        break;
+                }
+                num1=Integer.parseInt(res.getText().toString());
+                num2=0;
+                ass.setText("");
         }
     }
 }

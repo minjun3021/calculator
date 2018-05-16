@@ -2,6 +2,7 @@ package com.example.kmj.calculator;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,9 +26,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TextView minu;
     TextView plus;
     TextView equa;
-    TextView ass;
+    TextView ass;//보조 출력
     int num1=0,num2=0;
-    String how;
+    String how;//연산자 판별
+    int result;//결과값 출력
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         bt7=(TextView)findViewById(R.id.num7);
         bt8=(TextView)findViewById(R.id.num8);
         bt9=(TextView)findViewById(R.id.num9);
-
+        // 아이디 연동
         divi.setOnClickListener(this);
         mult.setOnClickListener(this);
         minu.setOnClickListener(this);
@@ -71,9 +73,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         bt7.setOnClickListener(this);
         bt8.setOnClickListener(this);
         bt9.setOnClickListener(this);
-
+        //클릭리스러 연동
     }
-
+    //setonclick
     @Override
     public void onClick(View v) {
         switch(v.getId()){
@@ -110,54 +112,58 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.clear:
                 res.setText("");
                 ass.setText("");
-                how="";
                 num1=0;
                 num2=0;
                 break;
             case R.id.div:
                 num1=Integer.parseInt(res.getText().toString());
-                how="/";
+                how="4";
                 ass.setText(res.getText()+" / ");
                 res.setText("");
 
                 break;
             case R.id.mul:
                 num1=Integer.parseInt(res.getText().toString());
-                how="*";
+                how="3";
                 ass.setText(res.getText()+" * ");
                 res.setText("");
                 break;
             case R.id.min:
                 num1=Integer.parseInt(res.getText().toString());
-                how="-";
+                how="2";
                 ass.setText(res.getText()+" - ");
                 res.setText("");
                 break;
-            case R.id.plu:
-                num1=Integer.parseInt(res.getText().toString());
-                how="+";
+            case R.id.plu: //연산자 누르면 text의 숫자 값 저장
+                num1=Integer.parseInt((String) res.getText()); // gettext->int형변환
+                how="1";
+                Log.e("num1", String.valueOf(num1));//->로그 찍기
                 ass.setText(res.getText()+" + ");
                 res.setText("");
                 break;
-            case R.id.equ:
+            case R.id.equ: // '='누르면 text값 저장
                 num2=Integer.parseInt(res.getText().toString());
-                res.setText("");
-                switch(how){
-                    case "/":
-                        res.setText(num1/num2);
+                Log.e("num2", String.valueOf(num2)); //로그찍기
+                switch(how){// 연산자 판별
+                    case "4":
+                        result = num1/num2;
+                        res.setText(String.valueOf(result));// setText -> String형 int->error
                         break;
-                    case "*":
-                        res.setText(num1*num2);
+                    case "3":
+                        result = num1*num2;
+                        res.setText(String.valueOf(result));
                         break;
-                    case "-":
-                        res.setText(num1-num2);
+                    case "2":
+                        result =  num1-num2;
+                        res.setText(String.valueOf(result));
                         break;
-                    case  "+":
-                        res.setText(num1+num2);
+                    case "1":
+                        result = num1+num2;
+                        res.setText(String.valueOf(result));
                         break;
                 }
-                num1=Integer.parseInt(res.getText().toString());
-                num2=0;
+//                num1=Integer.parseInt(res.getText().toString());
+//                num2=0;
                 ass.setText("");
         }
     }
